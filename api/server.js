@@ -7,6 +7,7 @@ const app = require('./src/app');
 
 app.use(express.json());
 
+
 const allowedOrigins = ["http://localhost:5173", "https://aicode-pearl.vercel.app"];
 
 app.use(cors({

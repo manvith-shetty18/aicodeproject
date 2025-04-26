@@ -6,8 +6,24 @@ require("dotenv").config();
 const app = require('./src/app');
 
 app.use(express.json());
-app.use(cors({ origin: "*" }));
+// ✅ Define allowed origins (your frontend)
+const allowedOrigins = ["http://localhost:5173", "https://aicode-pearl.vercel.app"];
 
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // ✅ Allow cookies and authentication headers
+  methods: "GET,POST,PUT,DELETE,OPTIONS", // ✅ Allow these HTTP methods
+  allowedHeaders: "Content-Type,Authorization" // ✅ Allow headers
+}));
+
+// ✅ Handle preflight requests properly
+app.options("*", cors());
 // ✅ MongoDB Connection
 mongoose
   .connect(process.env.MONGO_URI, {

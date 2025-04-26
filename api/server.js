@@ -7,7 +7,7 @@ const app = require('./src/app');
 
 app.use(express.json());
 // ✅ Define allowed origins (your frontend)
-const allowedOrigins = ["http://localhost:5173", "https://aicode-pearl.vercel.app"];
+const allowedOrigins = ["http://localhost:5173", "https://aicodereviewer.vercel.app/"];
 
 app.use(cors({
   origin: function (origin, callback) {
